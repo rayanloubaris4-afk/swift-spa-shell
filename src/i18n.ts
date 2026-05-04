@@ -112,6 +112,12 @@ export const T = {
   reviews_count: { fr: "693 avis · Google Maps", ar: "693 تقييم · خرائط جوجل" },
 
   // Footer
+  delivery_eyebrow: { fr: "Livraison à domicile", ar: "التوصيل إلى المنزل" },
+  delivery_title: { fr: "Aussi disponible sur", ar: "متوفرون أيضاً على" },
+  delivery_sub: { fr: "Commandez vos plats favoris en quelques clics", ar: "اطلب أطباقك المفضلة بنقرات قليلة" },
+  order_glovo: { fr: "Commander sur Glovo", ar: "اطلب عبر Glovo" },
+  order_done: { fr: "Commander sur Done", ar: "اطلب عبر Done" },
+
   footer_tagline: { fr: "Oulad Mtaa · Rabat · Maroc", ar: "أولاد مطاع · الرباط · المغرب" },
   footer_history: { fr: "Histoire", ar: "القصة" },
   footer_hours: { fr: "Horaires", ar: "ساعات العمل" },
