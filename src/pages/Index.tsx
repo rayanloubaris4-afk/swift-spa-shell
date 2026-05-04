@@ -514,6 +514,26 @@ const Index = () => {
         </div>
       </div>
 
+      <section className="delivery-section reveal">
+        <div className="delivery-inner">
+          <div className="delivery-text">
+            <span className="section-label">{t("delivery_eyebrow", lang)}</span>
+            <h2 className="delivery-title">{t("delivery_title", lang)} <em>Glovo &amp; Done</em></h2>
+            <p className="delivery-sub">{t("delivery_sub", lang)}</p>
+          </div>
+          <div className="delivery-buttons">
+            <a href="https://glovoapp.com/" target="_blank" rel="noreferrer" className="delivery-btn delivery-btn--glovo">
+              <span className="delivery-btn-brand">Glovo</span>
+              <span className="delivery-btn-cta">{t("order_glovo", lang)} →</span>
+            </a>
+            <a href="https://done.ma/" target="_blank" rel="noreferrer" className="delivery-btn delivery-btn--done">
+              <span className="delivery-btn-brand">Done</span>
+              <span className="delivery-btn-cta">{t("order_done", lang)} →</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="signature-gallery" id="gallery">
         <span className="section-label reveal">{t("signature_label", lang)}</span>
         <h2 className="section-title reveal reveal-delay-1">
