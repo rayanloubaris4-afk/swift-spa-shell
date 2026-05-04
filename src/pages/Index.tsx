@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import brunchImg from "@/assets/brunch.jpg";
+import { motion, AnimatePresence } from "framer-motion";
+import logo from "@/assets/logo.png";
+import dishBriocheSaumon from "@/assets/dish-brioche-saumon.jpg";
+import dishEggsBurger from "@/assets/dish-eggs-burger.jpg";
+import dishGranolaBowl from "@/assets/dish-granola-bowl.jpg";
+import dishBagel from "@/assets/dish-bagel.jpg";
+import dishFullBrunch from "@/assets/dish-full-brunch.jpg";
+import dishHalloumi from "@/assets/dish-halloumi-mushroom.jpg";
+import dishProsciutto from "@/assets/dish-prosciutto-eggs.jpg";
+import drinkMatcha from "@/assets/drink-strawberry-matcha.jpg";
 
 type MenuItem = {
   name: string;
@@ -7,100 +16,295 @@ type MenuItem = {
   price: string;
   tag?: string;
   featured?: boolean;
+  image?: string;
 };
 
 type Category = { id: string; label: string; items: MenuItem[] };
 
 const CATEGORIES: Category[] = [
   {
-    id: "salé",
-    label: "Salé",
+    id: "combos",
+    label: "Brunch Combos",
     items: [
-      { name: "Best Omelette", desc: "2 toasts grillés, omelette aux poireaux et parmesan, Jben, olives noires avec une petite salade", price: "59 MAD" },
-      { name: "Granola Bowl", desc: "Yaourt grec, homemade granola, fruits de saison, peanut butter, chia", price: "59 MAD" },
-      { name: "Brioche Salée", desc: "Avocat, œufs brouillés, saumon, sauce aneth", price: "79 MAD", tag: "Signature", featured: true },
-      { name: "American Breakfast", desc: "Saucisses de bœuf, œufs brouillés, tomates grillées, bacon, champignons frais, toasts & potatoes", price: "129 MAD" },
-      { name: "Turkish Eggs", desc: "Œufs sur yaourt grec à l'ail, beurre au paprika, chili flakes, aneth fraîche, pain libanais ou normal", price: "79 MAD" },
-      { name: "Bagels Saumon ou Bacon", desc: "Bagels aux céréales, cream cheese, avocat, saumon ou bacon", price: "80 MAD" },
-      { name: "Shakshuka", desc: "Œufs au plat dans une sauce tomate fraîche, poivrons, oignons et épices douces, pain frais", price: "59 MAD" },
-      { name: "Hera Brunch", desc: "2× toasts avocat (cream cheese, œufs brouillés, bacon) + chia pudding + boisson + jus + brioche sucrée mascarpone", price: "154 MAD", tag: "Best-seller", featured: true },
-      { name: "2× Toasts Avocado & Bacon", desc: "Toast au seigle, cream cheese, smashed avocado, œufs brouillés, petite salade", price: "75 MAD" },
-      { name: "Açaí Bowl", desc: "Açaí & banane, blueberry, fruits de saison, peanut butter, homemade granola, chia", price: "69 MAD" },
-      { name: "Moroccan Rituel", desc: "Mssemen, harcha, olives, jben, mkhamer, thym, fromage râpé, raib, amlou, œufs brouillés + thé/café + jus", price: "79 MAD", tag: "Tradition", featured: true },
+      {
+        name: "Hera Brunch",
+        desc: "2 toasts avocado & bacon ou saumon sauce aneth, œufs brouillés · brioche sucrée mascarpone & berries · caramel beurre salé · chia pudding yaourt grec, fruits & peanut butter · boisson chaude + jus frais",
+        price: "129 DH",
+        tag: "Signature",
+        featured: true,
+        image: dishFullBrunch,
+      },
+      {
+        name: "American Breakfast",
+        desc: "2 toasts, tomates grillées, œufs brouillés, bacon, champignons frais, saucisses de bœuf & potatoes · boisson chaude + jus frais",
+        price: "99 DH",
+        featured: true,
+        image: dishEggsBurger,
+      },
+      {
+        name: "Assiette Fraîche",
+        desc: "2 toasts, 2 œufs au plat, fromage masdam, jben, olives noires, fruits de saison, avocat & veggies · boisson chaude + jus frais",
+        price: "79 DH",
+      },
+      {
+        name: "Moroccan Rituel",
+        desc: "Mssemen, harcha, pain, olives noires, jben, miel, raib à l'amlou, fleur d'oranger, œufs au cumin · thé + jus frais (supp. khlii à l'huile d'olive +12 DH)",
+        price: "79 DH",
+        tag: "Tradition",
+      },
+      {
+        name: "Best Omelette",
+        desc: "Omelette poireaux–parmesan, cream cheese, olives noires, pain grillé & salade",
+        price: "49 DH",
+      },
+      {
+        name: "Turkish Eggs",
+        desc: "Œufs servis sur yaourt grec à l'ail, beurre au paprika, chili flakes, aneth fraîche · pain libanais",
+        price: "69 DH",
+        tag: "Spicy 🌶️",
+      },
+      {
+        name: "Shakshuka ❤️",
+        desc: "Œufs au plat ou brouillés mijotés dans une sauce tomate chaude, poivrons grillés au feu de bois, fêta ou fromage râpé, épices douces · pain frais à tremper",
+        price: "49 DH",
+      },
+      {
+        name: "Açai Bowl ❤️",
+        desc: "Açai garni de granola, fruits de saison & beurre de cacahuète maison",
+        price: "49 / 69 DH",
+      },
+      {
+        name: "Granola Bowl",
+        desc: "Yaourt grec garni de granola, fruits de saison & beurre de cacahuète maison",
+        price: "39 / 59 DH",
+        image: dishGranolaBowl,
+      },
     ],
   },
   {
-    id: "sucré",
-    label: "Sucré",
+    id: "brunch-lunch",
+    label: "Brunch & Lunch",
     items: [
-      { name: "Crème Brûlée Maison à la Vanille", desc: "Crème onctueuse parfumée à la vanille, fine croûte de sucre caramélisé à la flamme", price: "35 MAD" },
-      { name: "Brioche Kunefe Dubai", desc: "Brioche moelleuse, Nutella, crème pistache, Kunefe & boule de glace", price: "85 MAD", tag: "Trending", featured: true },
-      { name: "Brioche Tiramisu", desc: "Crème mascarpone, cacao pur, shot espresso et chocolat blanc", price: "105 MAD" },
-      { name: "Fluffy Pancakes Berries & Chocolat", desc: "2 pancakes moelleux, fruits rouges frais, crème mascarpone, pépites de chocolat", price: "75 MAD" },
-      { name: "Gaufre à la Minute", desc: "Gaufre maison cuite à la commande, croustillante à l'extérieur, fondante à l'intérieur", price: "65 MAD" },
-      { name: "Brioche Perdue", desc: "Brioche dorée à la poêle, fruits frais et crème mascarpone onctueuse", price: "75 MAD", tag: "Signature", featured: true },
+      {
+        name: "Brioche Salée Saumon ou Bacon ❤️",
+        desc: "Brioche salée grillée, saumon fumé, avocat écrasé citronné, sauce aneth crémeuse maison & œufs brouillés, herbes fraîches",
+        price: "70 DH",
+        tag: "Best-seller",
+        featured: true,
+        image: dishBriocheSaumon,
+      },
+      {
+        name: "Salty Bagel ❤️",
+        desc: "Bagel multi-grains, cream cheese, avocat, œufs & sauce aneth — saumon ou bacon",
+        price: "69 DH",
+        featured: true,
+        image: dishBagel,
+      },
+      {
+        name: "Duo Halloumi & Mushrooms Truffle ❤️",
+        desc: "Deux toasts gourmands : halloumi grillé, avocat, roquette, tomates fraîches + champignons poêlés crème truffe onctueuse",
+        price: "99 DH",
+        tag: "Premium",
+        featured: true,
+        image: dishHalloumi,
+      },
+      {
+        name: "2× Toasts Avocado & Bacon",
+        desc: "Pain toasté, feta, smashed avocado au citron, bacon croustillant, œufs & fines herbes, veggies",
+        price: "65 DH",
+        image: dishProsciutto,
+      },
+      {
+        name: "Brioche Champignons & Épinards 🌿",
+        desc: "Brioche grillée, épinards frais sautés, champignons poêlés, œufs brouillés onctueux & herbes fraîches",
+        price: "70 DH",
+      },
+      {
+        name: "Salmon Croffle",
+        desc: "Croissant pressé au gaufrier, avocat écrasé, saumon fumé & œuf au choix, herbes fraîches",
+        price: "60 DH",
+      },
+      {
+        name: "Tuna Roll",
+        desc: "Brioche, tuna mousse, pickles, herbes · servis avec potatoes aux herbes",
+        price: "75 DH",
+      },
+      {
+        name: "Croque Monsieur",
+        desc: "Pain toasté, jambon, fromage fondant, béchamel légère, grillé au beurre",
+        price: "49 DH",
+      },
+      {
+        name: "Guacamole y Nachos ❤️",
+        desc: "Avocat frais, oignon rouge, tomate, coriandre, citron vert, écrasé d'avocat, fines herbes & nachos",
+        price: "65 DH",
+      },
     ],
   },
   {
-    id: "chaud",
-    label: "Boissons Chaudes",
+    id: "tex-mex",
+    label: "Tex-Mex & Burgers",
     items: [
-      { name: "Espresso", price: "16 MAD" },
-      { name: "Double Espresso", price: "25 MAD" },
-      { name: "Cappuccino", desc: "Café espresso avec lait moussé", price: "25 MAD" },
-      { name: "Latte", desc: "Café espresso avec lait vapeur", price: "25 MAD" },
-      { name: "Cortado", desc: "Café espresso avec lait chaud", price: "26 MAD" },
-      { name: "Chocolat Chaud", desc: "Boisson chaude au chocolat et lait", price: "25 MAD" },
-      { name: "Moccachino", desc: "Cappuccino au chocolat", price: "30 MAD" },
-      { name: "Spanish Latte", desc: "Latte avec lait concentré sucré", price: "30 MAD" },
-      { name: "White Mocca", desc: "Café au chocolat blanc et lait", price: "35 MAD" },
-      { name: "Cappuccino Viennois", desc: "Cappuccino avec crème chantilly", price: "33 MAD" },
-      { name: "Matcha Latté", desc: "Thé matcha avec lait chaud", price: "40 MAD", tag: "Favori", featured: true },
-      { name: "Thé Marocain à la Menthe", desc: "Thé vert à la menthe fraîche", price: "25 MAD" },
-      { name: "Verveine", price: "22 MAD" },
-      { name: "Tchaba ou Yogi Tea", desc: "Infusion Tchaba ou Yogi Tea", price: "35 MAD" },
+      {
+        name: "Hera Burger",
+        desc: "Beef, cheddar, oignons caramélisés, champignons frais, bacon, sauce maison · potatoes",
+        price: "89 DH",
+        featured: true,
+      },
+      {
+        name: "Truffle & Brie Burger",
+        desc: "Truffle & beef, brie, sauce truffle & roquette",
+        price: "99 DH",
+        tag: "Premium",
+      },
+      {
+        name: "Coloslow Crispy Burger",
+        desc: "Poulet crispy, salade coloslow, mayo & concombre",
+        price: "79 DH",
+      },
+      {
+        name: "Sandwich Filet de Bœuf Parmesan",
+        desc: "Filet de bœuf en pain ciabatta, champignons, sauce champignons & parmesan",
+        price: "90 DH",
+        tag: "Chef",
+      },
+      {
+        name: "Trio de Tacos with Nachos & Potatoes",
+        desc: "Tacos viande hachée mexicains, crevettes & poulet crispy · potatoes, sauce yaourt & guacamole",
+        price: "85 DH",
+      },
+      {
+        name: "Quesadillas Viande Hachée & Potatoes",
+        desc: "Servies avec potatoes, sauce yaourt & guacamole",
+        price: "70 DH",
+      },
+      {
+        name: "Chicken Wrap & Potatoes",
+        desc: "Wrap, poulet crispy, laitue, citron, mayo garlic & guacamole",
+        price: "60 DH",
+      },
+      { name: "Salade César", desc: "Iceberg, tomates cerises, croûtons aux herbes, parmesan & œufs durs", price: "65 DH" },
+      { name: "Poké Bowl", desc: "Riz vinaigré, maïs, poulet, avocat, légumes & sauce savoureuse", price: "75 DH" },
+      { name: "Salade Grecque", desc: "Tomates fraîches, concombre, oignon rouge, olives noires, feta, origan & huile d'olive extra vierge", price: "70 DH" },
     ],
   },
   {
-    id: "froid",
-    label: "Boissons Froides",
+    id: "sweetness",
+    label: "Sweetness",
     items: [
-      { name: "Ice Latte", desc: "Café glacé avec lait froid", price: "25 MAD" },
-      { name: "Ice Mocca", desc: "Café glacé au chocolat", price: "30 MAD" },
-      { name: "Ice Spanish Latte", desc: "Spanish latte servi glacé", price: "50 MAD" },
-      { name: "Ice Matcha", desc: "Thé matcha glacé avec lait", price: "69 MAD" },
-      { name: "Ice Matcha Strawberry", desc: "Matcha glacé aux fraises", price: "79 MAD", tag: "Best-seller", featured: true },
-      { name: "Ice Matcha Passion", desc: "Matcha glacé aux fruits de la passion", price: "79 MAD", tag: "Nouveau", featured: true },
+      {
+        name: "Brioche Tiramisu ❤️",
+        desc: "Brioche façon tiramisu dorée à la poêle, crème mascarpone onctueuse, cacao pur, shot d'espresso & chocolat blanc",
+        price: "90 DH",
+        tag: "Cult favorite",
+        featured: true,
+      },
+      {
+        name: "Brioche Kunefe Dubai ❤️",
+        desc: "Brioche moelleuse, Nutella & crème pistache, kunefe & boule de glace vanille",
+        price: "70 DH",
+        tag: "Trending",
+        featured: true,
+      },
+      {
+        name: "French Brioche Fruits ❤️",
+        desc: "Brioche dorée à la poêle, fruits frais & crème mascarpone onctueuse",
+        price: "65 DH",
+      },
+      {
+        name: "Fluffy Mango & Passion Pancakes 🥭",
+        desc: "Deux pancakes moelleux, mangue fraîche, coulis de fruit de la passion, mascarpone coco & amandes effilées grillées",
+        price: "65 DH",
+      },
+      {
+        name: "Berries & Choco Pancakes",
+        desc: "Pancakes moelleux, pépites de chocolat, fruits rouges frais & crème mascarpone onctueuse",
+        price: "65 DH",
+      },
+      {
+        name: "Brioche Fleur d'Oranger & Amlou",
+        desc: "Brioche moelleuse à la crème de fleur d'oranger, amlou onctueux",
+        price: "75 DH",
+      },
+      {
+        name: "Waffle à la Minute",
+        desc: "Gaufre maison préparée à la minute · fruits frais, chocolat, Lotus ou caramel beurre salé",
+        price: "55 DH",
+      },
+      { name: "Crêpe Sucrée", desc: "Chocolat ou caramel beurre salé · Kunefe pistache +10 DH", price: "40 DH" },
+      { name: "Crêpe Salée", desc: "Poulet & champignon, sauce fromage", price: "55 DH" },
+      { name: "Almonds Lemon Cake", price: "35 DH" },
+      { name: "Carrot Cake / Banana Bread", price: "35 DH" },
+      { name: "Cookie Kunefe", price: "35 DH" },
     ],
   },
   {
-    id: "jus",
-    label: "Jus Frais",
+    id: "matcha",
+    label: "Matcha & Iced",
     items: [
-      { name: "Jus d'Orange", desc: "Jus d'orange frais sans sucre", price: "35 MAD" },
-      { name: "Jus de Mangue", price: "35 MAD" },
-      { name: "Jus d'Ananas", price: "35 MAD" },
-      { name: "Jus de Carotte", desc: "Jus de carotte frais, base orange, sans sucre", price: "35 MAD" },
-      { name: "Jus de Citron/Gingembre", price: "28 MAD" },
-      { name: "Jus de Fraise", price: "39 MAD" },
-      { name: "Jus de Fruits Rouges", price: "42 MAD", tag: "Favori", featured: true },
+      {
+        name: "Iced Matcha Strawberry",
+        desc: "Cérémonial matcha, fraises fraîches & lait au choix",
+        price: "59 DH",
+        tag: "Best-seller",
+        featured: true,
+        image: drinkMatcha,
+      },
+      { name: "Iced Matcha Passion Fruit", price: "59 DH", tag: "Nouveau" },
+      { name: "Iced Matcha Mango Vanilla", price: "65 DH", featured: true },
+      { name: "Iced Matcha Vanilla", price: "55 DH" },
+      { name: "Iced Matcha", price: "50 DH" },
+      { name: "Matcha Latte", desc: "Cérémonial matcha & lait chaud vapeur", price: "45 DH" },
+      { name: "Iced Pistachio Latte", price: "45 DH" },
+      { name: "Iced Cappuccino Viennois", price: "45 DH" },
+      { name: "Iced Mocha", price: "40 DH" },
+      { name: "Iced White Mocha", price: "40 DH" },
+      { name: "Iced Spanish Latte", price: "38 DH" },
+      { name: "Iced Cappuccino", price: "35 DH" },
+      { name: "Iced Latte", price: "33 DH" },
+      { name: "Iced Chocolate", price: "30 DH" },
     ],
   },
   {
-    id: "déjeuner",
-    label: "Déjeuner",
+    id: "coffees",
+    label: "Coffees & Tea",
     items: [
-      { name: "Salade Grecque", desc: "Ice berg, feta, concombre, olives noires, poivrons rouges, noix", price: "65 MAD" },
-      { name: "Salade César", desc: "Poulet, croutons, iceberg, cerises, parmesan, sauce césar", price: "70 MAD" },
-      { name: "Chicken Wrap & Potatoes", desc: "Poulet, sauce yaourt, citron, ail, guacamole & potatoes", price: "70 MAD" },
-      { name: "Quesadillas Viande Hachée & Potatoes", desc: "Potatoes, guacamole, sauce yaourt", price: "85 MAD" },
-      { name: "Tuna Roll", desc: "Brioche tuna mousse, pickles, potatoes aux herbes", price: "90 MAD" },
-      { name: "Coloslow Crispy Burger", desc: "Poulet crispy, coloslow salade, mayo & concombre, potatoes", price: "90 MAD" },
-      { name: "Hera Burger 100g", desc: "Viande hachée, cheddar, oignons caramélisés, champignons, bacon, sauce maison, potatoes", price: "99 MAD" },
-      { name: "Trio Tacos & Potatoes", desc: "Viande hachée, crevettes, poulet — guacamole & sauce yaourt", price: "105 MAD" },
-      { name: "Sandwich Filet de Bœuf & Parmesan", desc: "Filet de bœuf parmesan, potatoes et sauce champignons", price: "109 MAD", tag: "Chef", featured: true },
-      { name: "Truffle & Brie Burger", desc: "Burger truffe & bœuf, brie, potatoes aux herbes", price: "120 MAD", tag: "Premium", featured: true },
-      { name: "Duo Halloumi & Mushrooms Truffle", desc: "2× toasts : halloumi cheese toast + avocat & crème truffe et champignons", price: "129 MAD" },
+      { name: "Espresso", price: "18 DH" },
+      { name: "Double Espresso", price: "24 DH" },
+      { name: "Americano", price: "23 DH" },
+      { name: "Espresso Macchiato", price: "25 DH" },
+      { name: "Latte", price: "23 DH" },
+      { name: "Cortado", price: "25 DH" },
+      { name: "Cappuccino", price: "25 DH" },
+      { name: "Hot Chocolate", price: "25 DH" },
+      { name: "Spiced Chai Latte", price: "28 DH" },
+      { name: "Vanilla Chai Latte", price: "28 DH" },
+      { name: "Moccachino", price: "28 DH" },
+      { name: "Spanish Latte", price: "28 DH" },
+      { name: "Pistachio Latte", price: "35 DH", tag: "Favori" },
+      { name: "Caramel ou Vanilla Latte", price: "33 DH" },
+      { name: "Hazelnut Cappuccino", price: "35 DH" },
+      { name: "White Chocolate Mocha", price: "33 DH" },
+      { name: "Dark Chocolate Mocha", price: "33 DH" },
+      { name: "Chocolat à l'Ancienne", price: "35 DH" },
+      { name: "Cappuccino Viennois", price: "38 DH" },
+      { name: "Thé à la Menthe", price: "20 DH" },
+      { name: "Verveine", price: "18 DH" },
+      { name: "Black Tea", price: "18 DH" },
+      { name: "Infusion Tchaba", price: "28 DH" },
+      { name: "Infusion Yogi Tea", price: "28 DH" },
+    ],
+  },
+  {
+    id: "smoothies",
+    label: "Smoothies & Juice",
+    items: [
+      { name: "Berry Smoothie", price: "59 DH", featured: true },
+      { name: "Mango Pineapple Smoothie", price: "59 DH" },
+      { name: "Green Vanilla Smoothie", price: "59 DH" },
+      { name: "Ice Tea Peach", price: "38 DH" },
+      { name: "Ice Tea Passion", price: "38 DH" },
+      { name: "Ice Tea Lemon (sugar free)", price: "38 DH" },
     ],
   },
 ];
@@ -114,9 +318,20 @@ const REVIEWS = [
   { stars: 5, text: "Un vrai coup de cœur ! Le pain perdu était tellement moelleux, et le matcha à la fraise — exquis. La déco est magnifique, chaleureuse et pensée dans les moindres détails.", initials: "ZI", name: "Zineb I.", meta: "Il y a 7 mois" },
 ];
 
+const SIGNATURE_DISHES = [
+  { img: dishBriocheSaumon, name: "Brioche Salée Saumon", tag: "Signature", className: "gi-large" },
+  { img: dishBagel, name: "Salty Bagel", tag: "Best-seller", className: "gi-medium" },
+  { img: drinkMatcha, name: "Iced Matcha Strawberry", tag: "Iconic", className: "gi-medium" },
+  { img: dishHalloumi, name: "Halloumi & Truffle Mushrooms", tag: "Premium", className: "gi-wide" },
+  { img: dishFullBrunch, name: "American Breakfast", tag: "Generous", className: "gi-wide" },
+  { img: dishGranolaBowl, name: "Granola Bowl", tag: "Healthy", className: "gi-wide" },
+  { img: dishProsciutto, name: "Toast Prosciutto & Avocat", tag: "Fresh", className: "gi-medium" },
+  { img: dishEggsBurger, name: "Turkish Eggs & Burger", tag: "Bold", className: "gi-medium" },
+];
+
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [activeCat, setActiveCat] = useState("salé");
+  const [activeCat, setActiveCat] = useState("combos");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -146,29 +361,79 @@ const Index = () => {
   return (
     <>
       <nav className={`hera-nav ${scrolled ? "scrolled" : ""}`}>
-        <a href="#top" className="nav-logo">Hera</a>
+        <a href="#top" className="nav-logo" aria-label="Hera Brunch">
+          <img src={logo} alt="Hera Brunch" className="nav-logo-img" />
+        </a>
         <ul className="nav-links">
           <li><a href="#about">Notre histoire</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#reviews">Avis</a></li>
           <li><a href="#info">Infos</a></li>
-          <li><a href="#contact" className="nav-cta">Contact</a></li>
+          <li><a href="#contact" className="nav-cta">Réserver</a></li>
         </ul>
       </nav>
 
       <section className="hero" id="top">
         <div className="hero-bg" />
         <div className="hero-texture" />
+        <div className="hero-photos">
+          <img src={dishBriocheSaumon} alt="" />
+          <img src={dishBagel} alt="" />
+          <img src={drinkMatcha} alt="" />
+          <img src={dishFullBrunch} alt="" />
+          <img src={dishHalloumi} alt="" />
+          <img src={dishGranolaBowl} alt="" />
+        </div>
         <div className="hero-line-left" />
         <div className="hero-line-right" />
         <div className="hero-content">
-          <span className="hero-eyebrow">Oulad Mtaa · Rabat · Maroc</span>
-          <h1 className="hero-title">HERA<br /><em>Brunch</em></h1>
-          <p className="hero-subtitle-word">L'art du brunch</p>
-          <div className="hero-divider" />
-          <p className="hero-desc">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hero-eyebrow"
+          >
+            Oulad Mtaa · Rabat · Maroc
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="hero-title"
+          >
+            HERA<br /><em>Brunch</em>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.7 }}
+            className="hero-subtitle-word"
+          >
+            Where cultures meet for brunch
+          </motion.p>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.95 }}
+            className="hero-divider"
+          />
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 1.1 }}
+            className="hero-desc"
+          >
             Une expérience culinaire d'exception dans un écrin cosy et raffiné. Produits frais, saveurs authentiques, moments inoubliables.
-          </p>
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 1.3 }}
+            style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}
+          >
+            <a href="#menu" className="btn-primary">Découvrir le menu</a>
+            <a href="#contact" className="btn-ghost">Nous contacter</a>
+          </motion.div>
         </div>
         <div className="hero-scroll">
           <span>Scroll</span>
@@ -191,16 +456,50 @@ const Index = () => {
         </div>
       </div>
 
+      {/* SIGNATURE GALLERY */}
+      <section className="signature-gallery" id="gallery">
+        <span className="section-label reveal">Nos plats signature</span>
+        <h2 className="section-title reveal reveal-delay-1">
+          Chaque assiette,<br /><em>une histoire à savourer</em>
+        </h2>
+        <div className="gold-rule center reveal reveal-delay-2" />
+        <div className="gallery-grid">
+          {SIGNATURE_DISHES.map((dish, i) => (
+            <motion.div
+              key={dish.name}
+              className={`gallery-item ${dish.className}`}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: (i % 4) * 0.1 }}
+            >
+              <img src={dish.img} alt={dish.name} loading="lazy" />
+              <div className="gallery-overlay">
+                <span className="gallery-overlay-tag">{dish.tag}</span>
+                <span className="gallery-overlay-name">{dish.name}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       <section className="about" id="about">
         <div className="about-visual reveal">
-          <div className="about-img-main">
-            <img src={brunchImg} alt="Hera Brunch — nos plats" width={1280} height={1280} />
+          <div className="about-img-stack">
+            <div><img src={dishBriocheSaumon} alt="Brioche salée saumon" /></div>
+            <div><img src={dishProsciutto} alt="Toast prosciutto avocat" /></div>
           </div>
-          <div className="about-img-accent">
+          <motion.div
+            className="about-img-accent float-anim"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             <div className="about-rating-num">4.7</div>
             <div className="about-rating-stars">★★★★★</div>
             <div className="about-rating-label">693 avis Google</div>
-          </div>
+          </motion.div>
         </div>
         <div className="about-text">
           <span className="section-label reveal">Notre histoire</span>
@@ -258,28 +557,41 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="menu-cat-panel">
-            <div className="menu-real-grid">
-              {current.items.map((item) => (
-                <div key={item.name} className={`menu-real-item ${item.featured ? "featured" : ""}`}>
-                  <div className="menu-real-left">
-                    <div className="menu-real-name">
-                      {item.name}
-                      {item.tag && <span className="menu-tag">{item.tag}</span>}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCat}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="menu-cat-panel"
+            >
+              <div className="menu-real-grid">
+                {current.items.map((item, i) => (
+                  <div
+                    key={item.name}
+                    className={`menu-real-item ${item.featured ? "featured" : ""}`}
+                    style={{ animationDelay: `${i * 0.05}s` }}
+                  >
+                    <div className="menu-real-left">
+                      <div className="menu-real-name">
+                        {item.name}
+                        {item.tag && <span className="menu-tag">{item.tag}</span>}
+                      </div>
+                      {item.desc && <div className="menu-real-desc">{item.desc}</div>}
                     </div>
-                    {item.desc && <div className="menu-real-desc">{item.desc}</div>}
+                    <div className="menu-real-price">{item.price}</div>
                   </div>
-                  <div className="menu-real-price">{item.price}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
           <div style={{ textAlign: "center", marginTop: "3.5rem" }} className="reveal">
             <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", color: "hsl(19 58% 51% / 0.5)", textTransform: "uppercase", marginBottom: "1.5rem" }}>
-              Menu susceptible de changer selon la saison
+              Suppléments : halloumi 20 · pepperoni 15 · potatoes 15 · bacon 18 · saumon 25 · œuf 9 · cream cheese 9 · champignons 20 DH
             </p>
-            <a href="#contact" className="btn-primary">Nous contacter</a>
+            <a href="#contact" className="btn-primary">Réserver une table</a>
           </div>
         </div>
       </section>
@@ -305,8 +617,8 @@ const Index = () => {
                 <div className="contact-item-val">Oulad Mtaa, Rabat<br />Maroc</div>
               </div>
               <div>
-                <div className="contact-item-label">Accès</div>
-                <div className="contact-item-val">Retrouvez-nous sur<br />Google Maps</div>
+                <div className="contact-item-label">Livraison</div>
+                <div className="contact-item-val">Disponible sur<br />Done & Glovo</div>
               </div>
             </div>
           </div>
@@ -341,7 +653,12 @@ const Index = () => {
           <p className="reveal reveal-delay-2">
             Une question, une demande spéciale ou envie de nous rejoindre pour un moment inoubliable ? N'hésitez pas à nous appeler directement — notre équipe se fera un plaisir de vous répondre.
           </p>
-          <div className="reveal reveal-delay-2" style={{ margin: "2.5rem 0 3rem" }}>
+          <motion.div
+            className="reveal reveal-delay-2"
+            style={{ margin: "2.5rem 0 3rem" }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
             <div style={{ border: "1px solid hsl(var(--gold-light))", padding: "2.5rem", background: "hsl(var(--warm-white))", textAlign: "center" }}>
               <div style={{ fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "hsl(var(--gold))", marginBottom: "1rem" }}>Téléphone</div>
               <a href="tel:0667474027" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.8rem,5vw,2.8rem)", fontWeight: 300, color: "hsl(var(--espresso))", textDecoration: "none", letterSpacing: "0.1em", display: "block", marginBottom: "0.5rem" }}>
@@ -349,7 +666,7 @@ const Index = () => {
               </a>
               <div style={{ fontSize: "0.75rem", color: "hsl(var(--text-muted))", fontWeight: 300, letterSpacing: "0.1em" }}>Lun – Dim · 09h – 17h</div>
             </div>
-          </div>
+          </motion.div>
           <div className="reveal reveal-delay-2" style={{ display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
             <a href="tel:0667474027" className="btn-primary">📞 Appeler maintenant</a>
             <a href="https://www.instagram.com/herabrunch" target="_blank" rel="noreferrer" className="btn-ghost" style={{ color: "hsl(var(--espresso))", borderColor: "hsl(var(--gold))" }}>
@@ -377,7 +694,15 @@ const Index = () => {
         </div>
         <div className="reviews-grid">
           {REVIEWS.map((r, idx) => (
-            <div key={r.name + idx} className={`review-card reveal ${idx % 3 === 1 ? "reveal-delay-1" : idx % 3 === 2 ? "reveal-delay-2" : ""}`}>
+            <motion.div
+              key={r.name + idx}
+              className="review-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: (idx % 3) * 0.1 }}
+              whileHover={{ y: -6 }}
+            >
               <div className="review-stars">{"★".repeat(r.stars)}</div>
               <p className="review-text">{r.text}</p>
               <div className="review-author">
@@ -390,7 +715,7 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -399,7 +724,9 @@ const Index = () => {
         <div className="footer-inner">
           <div className="footer-top">
             <div>
-              <a href="#top" className="footer-logo">Hera</a>
+              <a href="#top" className="footer-logo" aria-label="Hera Brunch">
+                <img src={logo} alt="Hera Brunch" className="footer-logo-img" />
+              </a>
               <p className="footer-tagline" style={{ marginTop: "0.5rem" }}>Oulad Mtaa · Rabat · Maroc</p>
             </div>
             <ul className="footer-links">
@@ -411,7 +738,7 @@ const Index = () => {
             </ul>
           </div>
           <div className="footer-bottom">
-            <p className="footer-copy">© 2025 Hera Brunch · Tous droits réservés</p>
+            <p className="footer-copy">© 2026 Hera Brunch · Tous droits réservés</p>
             <div className="google-rating">
               <span>★★★★★</span>
               <strong>4.7</strong>
