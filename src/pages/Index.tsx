@@ -9,26 +9,35 @@ import dishFullBrunch from "@/assets/dish-full-brunch.jpg";
 import dishHalloumi from "@/assets/dish-halloumi-mushroom.jpg";
 import dishProsciutto from "@/assets/dish-prosciutto-eggs.jpg";
 import drinkMatcha from "@/assets/drink-strawberry-matcha.jpg";
+import dishTacosLunch from "@/assets/dish-tacos-lunch.jpg";
+import dishShakshuka from "@/assets/dish-shakshuka.jpg";
+import dishHalloumiDuo from "@/assets/dish-halloumi-duo.jpg";
+import dishGuacNachos from "@/assets/dish-guacamole-nachos.jpg";
+import dishShakshuka2 from "@/assets/dish-shakshuka-2.jpg";
+import dishHeraBurger from "@/assets/dish-hera-burger.jpg";
+import { t, CAT_LABELS, ITEM_AR, TAG_AR, type Lang } from "@/i18n";
 
 type MenuItem = {
   name: string;
-  desc?: string;
+  desc?: { fr: string; ar?: string };
   price: string;
   tag?: string;
   featured?: boolean;
   image?: string;
 };
 
-type Category = { id: string; label: string; items: MenuItem[] };
+type Category = { id: string; items: MenuItem[] };
 
 const CATEGORIES: Category[] = [
   {
     id: "combos",
-    label: "Brunch Combos",
     items: [
       {
         name: "Hera Brunch",
-        desc: "2 toasts avocado & bacon ou saumon sauce aneth, œufs brouillés · brioche sucrée mascarpone & berries · caramel beurre salé · chia pudding yaourt grec, fruits & peanut butter · boisson chaude + jus frais",
+        desc: {
+          fr: "2 toasts avocat & bacon ou saumon sauce aneth, œufs brouillés · brioche sucrée mascarpone & fruits rouges · caramel beurre salé · pudding chia yaourt grec, fruits & beurre de cacahuète · boisson chaude + jus frais",
+          ar: "توستان بالأفوكادو والبايكون أو السلمون مع صلصة الشبت، بيض مخفوق · بريوش حلوة بالماسكاربوني والتوت · كراميل بالزبدة المالحة · بودينغ شيا بالزبادي اليوناني والفواكه وزبدة الفول السوداني · مشروب ساخن + عصير طازج",
+        },
         price: "129 DH",
         tag: "Signature",
         featured: true,
@@ -36,46 +45,56 @@ const CATEGORIES: Category[] = [
       },
       {
         name: "American Breakfast",
-        desc: "2 toasts, tomates grillées, œufs brouillés, bacon, champignons frais, saucisses de bœuf & potatoes · boisson chaude + jus frais",
+        desc: {
+          fr: "2 toasts, tomates grillées, œufs brouillés, bacon, champignons frais, saucisses de bœuf & potatoes · boisson chaude + jus frais",
+          ar: "توستان، طماطم مشوية، بيض مخفوق، بايكون، فطر طازج، نقانق البقر وبطاطا · مشروب ساخن + عصير طازج",
+        },
         price: "99 DH",
         featured: true,
         image: dishEggsBurger,
       },
       {
         name: "Assiette Fraîche",
-        desc: "2 toasts, 2 œufs au plat, fromage masdam, jben, olives noires, fruits de saison, avocat & veggies · boisson chaude + jus frais",
+        desc: {
+          fr: "2 toasts, 2 œufs au plat, fromage masdam, jben, olives noires, fruits de saison, avocat & légumes · boisson chaude + jus frais",
+          ar: "توستان، بيضتان مقليتان، جبن ماسدام، جبن، زيتون أسود، فواكه الموسم، أفوكادو وخضروات · مشروب ساخن + عصير طازج",
+        },
         price: "79 DH",
       },
       {
         name: "Moroccan Rituel",
-        desc: "Mssemen, harcha, pain, olives noires, jben, miel, raib à l'amlou, fleur d'oranger, œufs au cumin · thé + jus frais (supp. khlii à l'huile d'olive +12 DH)",
+        desc: {
+          fr: "Msemen, harcha, pain, olives noires, jben, miel, raïb à l'amlou, fleur d'oranger, œufs au cumin · thé + jus frais (supp. khlii à l'huile d'olive +12 DH)",
+          ar: "مسمن، حرشة، خبز، زيتون أسود، جبن، عسل، رايب بالأملو، ماء الزهر، بيض بالكمون · أتاي + عصير طازج (إضافة خليع بزيت الزيتون +12 درهم)",
+        },
         price: "79 DH",
         tag: "Tradition",
       },
       {
         name: "Best Omelette",
-        desc: "Omelette poireaux–parmesan, cream cheese, olives noires, pain grillé & salade",
+        desc: { fr: "Omelette poireaux–parmesan, fromage frais, olives noires, pain grillé & salade", ar: "أومليت بالكراث والبارميزان، جبن طري، زيتون أسود، خبز محمص وسلطة" },
         price: "49 DH",
       },
       {
         name: "Turkish Eggs",
-        desc: "Œufs servis sur yaourt grec à l'ail, beurre au paprika, chili flakes, aneth fraîche · pain libanais",
+        desc: { fr: "Œufs servis sur yaourt grec à l'ail, beurre au paprika, piment, aneth fraîche · pain libanais", ar: "بيض يُقدَّم على زبادي يوناني بالثوم، زبدة بالبابريكا، فلفل، شبت طازج · خبز لبناني" },
         price: "69 DH",
         tag: "Spicy 🌶️",
       },
       {
         name: "Shakshuka ❤️",
-        desc: "Œufs au plat ou brouillés mijotés dans une sauce tomate chaude, poivrons grillés au feu de bois, fêta ou fromage râpé, épices douces · pain frais à tremper",
+        desc: { fr: "Œufs au plat ou brouillés mijotés dans une sauce tomate, poivrons grillés au feu de bois, fêta ou fromage râpé, épices douces · pain frais à tremper", ar: "بيض مقلي أو مخفوق في صلصة طماطم، فلفل مشوي على الحطب، فيتا أو جبن مبشور، توابل خفيفة · خبز طازج" },
         price: "49 DH",
+        image: dishShakshuka,
       },
       {
         name: "Açai Bowl ❤️",
-        desc: "Açai garni de granola, fruits de saison & beurre de cacahuète maison",
+        desc: { fr: "Açai garni de granola, fruits de saison & beurre de cacahuète maison", ar: "أساي مع غرانولا، فواكه الموسم وزبدة الفول السوداني المنزلية" },
         price: "49 / 69 DH",
       },
       {
         name: "Granola Bowl",
-        desc: "Yaourt grec garni de granola, fruits de saison & beurre de cacahuète maison",
+        desc: { fr: "Yaourt grec garni de granola, fruits de saison & beurre de cacahuète maison", ar: "زبادي يوناني مع غرانولا، فواكه الموسم وزبدة الفول السوداني المنزلية" },
         price: "39 / 59 DH",
         image: dishGranolaBowl,
       },
@@ -83,11 +102,10 @@ const CATEGORIES: Category[] = [
   },
   {
     id: "brunch-lunch",
-    label: "Brunch & Lunch",
     items: [
       {
         name: "Brioche Salée Saumon ou Bacon ❤️",
-        desc: "Brioche salée grillée, saumon fumé, avocat écrasé citronné, sauce aneth crémeuse maison & œufs brouillés, herbes fraîches",
+        desc: { fr: "Brioche salée grillée, saumon fumé, avocat écrasé citronné, sauce aneth crémeuse maison & œufs brouillés, herbes fraîches", ar: "بريوش مالحة مشوية، سلمون مدخن، أفوكادو مهروس بالليمون، صلصة الشبت الكريمية المنزلية، بيض مخفوق وأعشاب طازجة" },
         price: "70 DH",
         tag: "Best-seller",
         featured: true,
@@ -95,179 +113,179 @@ const CATEGORIES: Category[] = [
       },
       {
         name: "Salty Bagel ❤️",
-        desc: "Bagel multi-grains, cream cheese, avocat, œufs & sauce aneth — saumon ou bacon",
+        desc: { fr: "Bagel multi-grains, fromage frais, avocat, œufs & sauce aneth — saumon ou bacon", ar: "بايغل متعدد الحبوب، جبن طري، أفوكادو، بيض وصلصة الشبت — سلمون أو بايكون" },
         price: "69 DH",
         featured: true,
         image: dishBagel,
       },
       {
         name: "Duo Halloumi & Mushrooms Truffle ❤️",
-        desc: "Deux toasts gourmands : halloumi grillé, avocat, roquette, tomates fraîches + champignons poêlés crème truffe onctueuse",
+        desc: { fr: "Deux toasts gourmands : halloumi grillé, avocat, roquette, tomates fraîches + champignons poêlés crème truffe onctueuse", ar: "توستان فاخران: حلومي مشوي، أفوكادو، جرجير، طماطم طازجة + فطر مقلي بكريمة الكمأ" },
         price: "99 DH",
         tag: "Premium",
         featured: true,
-        image: dishHalloumi,
+        image: dishHalloumiDuo,
       },
       {
-        name: "2× Toasts Avocado & Bacon",
-        desc: "Pain toasté, feta, smashed avocado au citron, bacon croustillant, œufs & fines herbes, veggies",
+        name: "2× Toasts Avocat & Bacon",
+        desc: { fr: "Pain toasté, fêta, avocat écrasé au citron, bacon croustillant, œufs & fines herbes, légumes", ar: "خبز محمص، فيتا، أفوكادو مهروس بالليمون، بايكون مقرمش، بيض وأعشاب، خضروات" },
         price: "65 DH",
         image: dishProsciutto,
       },
       {
         name: "Brioche Champignons & Épinards 🌿",
-        desc: "Brioche grillée, épinards frais sautés, champignons poêlés, œufs brouillés onctueux & herbes fraîches",
+        desc: { fr: "Brioche grillée, épinards frais sautés, champignons poêlés, œufs brouillés onctueux & herbes fraîches", ar: "بريوش مشوية، سبانخ طازج، فطر مقلي، بيض مخفوق وأعشاب طازجة" },
         price: "70 DH",
       },
       {
-        name: "Salmon Croffle",
-        desc: "Croissant pressé au gaufrier, avocat écrasé, saumon fumé & œuf au choix, herbes fraîches",
+        name: "Croffle au Saumon",
+        desc: { fr: "Croissant pressé au gaufrier, avocat écrasé, saumon fumé & œuf au choix, herbes fraîches", ar: "كرواسون مضغوط على شكل وافل، أفوكادو مهروس، سلمون مدخن وبيض حسب الاختيار، أعشاب طازجة" },
         price: "60 DH",
       },
       {
-        name: "Tuna Roll",
-        desc: "Brioche, tuna mousse, pickles, herbes · servis avec potatoes aux herbes",
+        name: "Roulé au Thon",
+        desc: { fr: "Brioche, mousse de thon, cornichons, herbes · servi avec potatoes aux herbes", ar: "بريوش، موس التونة، مخللات، أعشاب · يُقدَّم مع بطاطا بالأعشاب" },
         price: "75 DH",
       },
       {
         name: "Croque Monsieur",
-        desc: "Pain toasté, jambon, fromage fondant, béchamel légère, grillé au beurre",
+        desc: { fr: "Pain toasté, jambon, fromage fondant, béchamel légère, grillé au beurre", ar: "خبز محمص، جامبون، جبن ذائب، بشاميل خفيف، مشوي بالزبدة" },
         price: "49 DH",
       },
       {
         name: "Guacamole y Nachos ❤️",
-        desc: "Avocat frais, oignon rouge, tomate, coriandre, citron vert, écrasé d'avocat, fines herbes & nachos",
+        desc: { fr: "Avocat frais, oignon rouge, tomate, coriandre, citron vert, écrasé d'avocat, fines herbes & nachos", ar: "أفوكادو طازج، بصل أحمر، طماطم، كزبرة، ليمون أخضر، مهروس الأفوكادو، أعشاب ونتشوس" },
         price: "65 DH",
+        image: dishGuacNachos,
       },
     ],
   },
   {
     id: "tex-mex",
-    label: "Tex-Mex & Burgers",
     items: [
       {
         name: "Hera Burger",
-        desc: "Beef, cheddar, oignons caramélisés, champignons frais, bacon, sauce maison · potatoes",
+        desc: { fr: "Bœuf, cheddar, oignons caramélisés, champignons frais, bacon, sauce maison · potatoes", ar: "لحم بقر، شيدر، بصل مكرمل، فطر طازج، بايكون، صلصة منزلية · بطاطا" },
         price: "89 DH",
         featured: true,
+        image: dishHeraBurger,
       },
       {
-        name: "Truffle & Brie Burger",
-        desc: "Truffle & beef, brie, sauce truffle & roquette",
+        name: "Burger Truffe & Brie",
+        desc: { fr: "Truffe & bœuf, brie, sauce truffe & roquette", ar: "كمأ ولحم بقر، جبن بري، صلصة الكمأ وجرجير" },
         price: "99 DH",
         tag: "Premium",
       },
       {
-        name: "Coloslow Crispy Burger",
-        desc: "Poulet crispy, salade coloslow, mayo & concombre",
+        name: "Burger Crispy Coleslaw",
+        desc: { fr: "Poulet crispy, salade coleslaw, mayo & concombre", ar: "دجاج مقرمش، سلطة كولسلو، مايونيز وخيار" },
         price: "79 DH",
       },
       {
         name: "Sandwich Filet de Bœuf Parmesan",
-        desc: "Filet de bœuf en pain ciabatta, champignons, sauce champignons & parmesan",
+        desc: { fr: "Filet de bœuf en pain ciabatta, champignons, sauce champignons & parmesan", ar: "فيليه البقر في خبز تشاباتا، فطر، صلصة الفطر وبارميزان" },
         price: "90 DH",
         tag: "Chef",
       },
       {
-        name: "Trio de Tacos with Nachos & Potatoes",
-        desc: "Tacos viande hachée mexicains, crevettes & poulet crispy · potatoes, sauce yaourt & guacamole",
+        name: "Trio de Tacos avec Nachos & Potatoes",
+        desc: { fr: "Tacos viande hachée mexicains, crevettes & poulet crispy · potatoes, sauce yaourt & guacamole", ar: "تاكوس باللحم المفروم المكسيكي، روبيان ودجاج مقرمش · بطاطا، صلصة الزبادي وغواكامولي" },
         price: "85 DH",
+        featured: true,
+        image: dishTacosLunch,
       },
       {
         name: "Quesadillas Viande Hachée & Potatoes",
-        desc: "Servies avec potatoes, sauce yaourt & guacamole",
+        desc: { fr: "Servies avec potatoes, sauce yaourt & guacamole", ar: "تُقدَّم مع بطاطا، صلصة الزبادي وغواكامولي" },
         price: "70 DH",
       },
       {
-        name: "Chicken Wrap & Potatoes",
-        desc: "Wrap, poulet crispy, laitue, citron, mayo garlic & guacamole",
+        name: "Wrap au Poulet & Potatoes",
+        desc: { fr: "Wrap, poulet crispy, laitue, citron, mayo à l'ail & guacamole", ar: "راب، دجاج مقرمش، خس، ليمون، مايونيز بالثوم وغواكامولي" },
         price: "60 DH",
       },
-      { name: "Salade César", desc: "Iceberg, tomates cerises, croûtons aux herbes, parmesan & œufs durs", price: "65 DH" },
-      { name: "Poké Bowl", desc: "Riz vinaigré, maïs, poulet, avocat, légumes & sauce savoureuse", price: "75 DH" },
-      { name: "Salade Grecque", desc: "Tomates fraîches, concombre, oignon rouge, olives noires, feta, origan & huile d'olive extra vierge", price: "70 DH" },
+      { name: "Salade César", desc: { fr: "Iceberg, tomates cerises, croûtons aux herbes, parmesan & œufs durs", ar: "خس آيسبرغ، طماطم كرزية، خبز محمص بالأعشاب، بارميزان وبيض مسلوق" }, price: "65 DH" },
+      { name: "Poké Bowl", desc: { fr: "Riz vinaigré, maïs, poulet, avocat, légumes & sauce savoureuse", ar: "أرز بالخل، ذرة، دجاج، أفوكادو، خضروات وصلصة لذيذة" }, price: "75 DH" },
+      { name: "Salade Grecque", desc: { fr: "Tomates fraîches, concombre, oignon rouge, olives noires, fêta, origan & huile d'olive extra vierge", ar: "طماطم طازجة، خيار، بصل أحمر، زيتون أسود، فيتا، زعتر وزيت زيتون بكر" }, price: "70 DH" },
     ],
   },
   {
     id: "sweetness",
-    label: "Sweetness",
     items: [
       {
         name: "Brioche Tiramisu ❤️",
-        desc: "Brioche façon tiramisu dorée à la poêle, crème mascarpone onctueuse, cacao pur, shot d'espresso & chocolat blanc",
+        desc: { fr: "Brioche façon tiramisu dorée à la poêle, crème mascarpone onctueuse, cacao pur, shot d'espresso & chocolat blanc", ar: "بريوش على طريقة التيراميسو محمصة بالمقلاة، كريمة الماسكاربوني، كاكاو نقي، إسبريسو وشوكولاتة بيضاء" },
         price: "90 DH",
         tag: "Cult favorite",
         featured: true,
       },
       {
         name: "Brioche Kunefe Dubai ❤️",
-        desc: "Brioche moelleuse, Nutella & crème pistache, kunefe & boule de glace vanille",
+        desc: { fr: "Brioche moelleuse, Nutella & crème de pistache, kunefe & boule de glace vanille", ar: "بريوش طرية، نوتيلا وكريمة الفستق، كنافة وكرة آيس كريم بالفانيلا" },
         price: "70 DH",
         tag: "Trending",
         featured: true,
       },
       {
-        name: "French Brioche Fruits ❤️",
-        desc: "Brioche dorée à la poêle, fruits frais & crème mascarpone onctueuse",
+        name: "Brioche Française aux Fruits ❤️",
+        desc: { fr: "Brioche dorée à la poêle, fruits frais & crème mascarpone onctueuse", ar: "بريوش محمصة بالمقلاة، فواكه طازجة وكريمة الماسكاربوني" },
         price: "65 DH",
       },
       {
-        name: "Fluffy Mango & Passion Pancakes 🥭",
-        desc: "Deux pancakes moelleux, mangue fraîche, coulis de fruit de la passion, mascarpone coco & amandes effilées grillées",
+        name: "Pancakes Mangue & Passion 🥭",
+        desc: { fr: "Deux pancakes moelleux, mangue fraîche, coulis de fruit de la passion, mascarpone coco & amandes effilées grillées", ar: "بانكيكان طريان، مانغو طازج، صلصة فاكهة العاطفة، ماسكاربوني بجوز الهند ولوز محمص" },
         price: "65 DH",
       },
       {
-        name: "Berries & Choco Pancakes",
-        desc: "Pancakes moelleux, pépites de chocolat, fruits rouges frais & crème mascarpone onctueuse",
+        name: "Pancakes Fruits Rouges & Chocolat",
+        desc: { fr: "Pancakes moelleux, pépites de chocolat, fruits rouges frais & crème mascarpone onctueuse", ar: "بانكيك طري، رقائق شوكولاتة، توت طازج وكريمة الماسكاربوني" },
         price: "65 DH",
       },
       {
         name: "Brioche Fleur d'Oranger & Amlou",
-        desc: "Brioche moelleuse à la crème de fleur d'oranger, amlou onctueux",
+        desc: { fr: "Brioche moelleuse à la crème de fleur d'oranger, amlou onctueux", ar: "بريوش طرية بكريمة ماء الزهر، أملو" },
         price: "75 DH",
       },
       {
-        name: "Waffle à la Minute",
-        desc: "Gaufre maison préparée à la minute · fruits frais, chocolat, Lotus ou caramel beurre salé",
+        name: "Gaufre à la Minute",
+        desc: { fr: "Gaufre maison préparée à la minute · fruits frais, chocolat, Lotus ou caramel beurre salé", ar: "وافل منزلي يُحضَّر فوراً · فواكه طازجة، شوكولاتة، لوتس أو كراميل بالزبدة المالحة" },
         price: "55 DH",
       },
-      { name: "Crêpe Sucrée", desc: "Chocolat ou caramel beurre salé · Kunefe pistache +10 DH", price: "40 DH" },
-      { name: "Crêpe Salée", desc: "Poulet & champignon, sauce fromage", price: "55 DH" },
-      { name: "Almonds Lemon Cake", price: "35 DH" },
+      { name: "Crêpe Sucrée", desc: { fr: "Chocolat ou caramel beurre salé · Kunefe pistache +10 DH", ar: "شوكولاتة أو كراميل بالزبدة المالحة · كنافة بالفستق +10 درهم" }, price: "40 DH" },
+      { name: "Crêpe Salée", desc: { fr: "Poulet & champignon, sauce fromage", ar: "دجاج وفطر، صلصة الجبن" }, price: "55 DH" },
+      { name: "Cake Citron Amande", price: "35 DH" },
       { name: "Carrot Cake / Banana Bread", price: "35 DH" },
       { name: "Cookie Kunefe", price: "35 DH" },
     ],
   },
   {
     id: "matcha",
-    label: "Matcha & Iced",
     items: [
       {
-        name: "Iced Matcha Strawberry",
-        desc: "Cérémonial matcha, fraises fraîches & lait au choix",
+        name: "Matcha Glacé Fraise",
+        desc: { fr: "Matcha cérémonial, fraises fraîches & lait au choix", ar: "ماتشا احتفالي، فراولة طازجة وحليب حسب الاختيار" },
         price: "59 DH",
         tag: "Best-seller",
         featured: true,
         image: drinkMatcha,
       },
-      { name: "Iced Matcha Passion Fruit", price: "59 DH", tag: "Nouveau" },
-      { name: "Iced Matcha Mango Vanilla", price: "65 DH", featured: true },
-      { name: "Iced Matcha Vanilla", price: "55 DH" },
-      { name: "Iced Matcha", price: "50 DH" },
-      { name: "Matcha Latte", desc: "Cérémonial matcha & lait chaud vapeur", price: "45 DH" },
-      { name: "Iced Pistachio Latte", price: "45 DH" },
-      { name: "Iced Cappuccino Viennois", price: "45 DH" },
-      { name: "Iced Mocha", price: "40 DH" },
-      { name: "Iced White Mocha", price: "40 DH" },
-      { name: "Iced Spanish Latte", price: "38 DH" },
-      { name: "Iced Cappuccino", price: "35 DH" },
-      { name: "Iced Latte", price: "33 DH" },
-      { name: "Iced Chocolate", price: "30 DH" },
+      { name: "Matcha Glacé Fruit de la Passion", price: "59 DH", tag: "Nouveau" },
+      { name: "Matcha Glacé Mangue Vanille", price: "65 DH", featured: true },
+      { name: "Matcha Glacé Vanille", price: "55 DH" },
+      { name: "Matcha Glacé", price: "50 DH" },
+      { name: "Matcha Latte", desc: { fr: "Matcha cérémonial & lait chaud vapeur", ar: "ماتشا احتفالي وحليب ساخن مبخر" }, price: "45 DH" },
+      { name: "Latte Pistache Glacé", price: "45 DH" },
+      { name: "Cappuccino Viennois Glacé", price: "45 DH" },
+      { name: "Mocha Glacé", price: "40 DH" },
+      { name: "Mocha Blanc Glacé", price: "40 DH" },
+      { name: "Latte Espagnol Glacé", price: "38 DH" },
+      { name: "Cappuccino Glacé", price: "35 DH" },
+      { name: "Latte Glacé", price: "33 DH" },
+      { name: "Chocolat Glacé", price: "30 DH" },
     ],
   },
   {
     id: "coffees",
-    label: "Coffees & Tea",
     items: [
       { name: "Espresso", price: "18 DH" },
       { name: "Double Espresso", price: "24 DH" },
@@ -276,68 +294,97 @@ const CATEGORIES: Category[] = [
       { name: "Latte", price: "23 DH" },
       { name: "Cortado", price: "25 DH" },
       { name: "Cappuccino", price: "25 DH" },
-      { name: "Hot Chocolate", price: "25 DH" },
-      { name: "Spiced Chai Latte", price: "28 DH" },
-      { name: "Vanilla Chai Latte", price: "28 DH" },
+      { name: "Chocolat Chaud", price: "25 DH" },
+      { name: "Chai Latte Épicé", price: "28 DH" },
+      { name: "Chai Latte Vanille", price: "28 DH" },
       { name: "Moccachino", price: "28 DH" },
-      { name: "Spanish Latte", price: "28 DH" },
-      { name: "Pistachio Latte", price: "35 DH", tag: "Favori" },
-      { name: "Caramel ou Vanilla Latte", price: "33 DH" },
-      { name: "Hazelnut Cappuccino", price: "35 DH" },
-      { name: "White Chocolate Mocha", price: "33 DH" },
-      { name: "Dark Chocolate Mocha", price: "33 DH" },
+      { name: "Latte Espagnol", price: "28 DH" },
+      { name: "Latte Pistache", price: "35 DH", tag: "Favori" },
+      { name: "Latte Caramel ou Vanille", price: "33 DH" },
+      { name: "Cappuccino Noisette", price: "35 DH" },
+      { name: "Mocha Chocolat Blanc", price: "33 DH" },
+      { name: "Mocha Chocolat Noir", price: "33 DH" },
       { name: "Chocolat à l'Ancienne", price: "35 DH" },
       { name: "Cappuccino Viennois", price: "38 DH" },
       { name: "Thé à la Menthe", price: "20 DH" },
       { name: "Verveine", price: "18 DH" },
-      { name: "Black Tea", price: "18 DH" },
+      { name: "Thé Noir", price: "18 DH" },
       { name: "Infusion Tchaba", price: "28 DH" },
       { name: "Infusion Yogi Tea", price: "28 DH" },
     ],
   },
   {
     id: "smoothies",
-    label: "Smoothies & Juice",
     items: [
-      { name: "Berry Smoothie", price: "59 DH", featured: true },
-      { name: "Mango Pineapple Smoothie", price: "59 DH" },
-      { name: "Green Vanilla Smoothie", price: "59 DH" },
-      { name: "Ice Tea Peach", price: "38 DH" },
-      { name: "Ice Tea Passion", price: "38 DH" },
-      { name: "Ice Tea Lemon (sugar free)", price: "38 DH" },
+      { name: "Smoothie Fruits Rouges", price: "59 DH", featured: true },
+      { name: "Smoothie Mangue Ananas", price: "59 DH" },
+      { name: "Smoothie Vert Vanille", price: "59 DH" },
+      { name: "Thé Glacé Pêche", price: "38 DH" },
+      { name: "Thé Glacé Passion", price: "38 DH" },
+      { name: "Thé Glacé Citron (sans sucre)", price: "38 DH" },
     ],
   },
 ];
 
 const REVIEWS = [
-  { stars: 5, text: "L'une des meilleures expériences brunch que j'ai eues à Rabat. Produits frais, portions généreuses, service irréprochable. Un endroit que je recommande les yeux fermés.", initials: "MR", name: "Monsieur R.", meta: "Local Guide", badge: "103 avis" },
-  { stars: 5, text: "Juste incroyablement bon ! Le brunch réalisé avec des produits frais est hyper réconfortant. Au-delà d'être excellent, tout est joliment présenté. Une adresse à retenir absolument.", initials: "HF", name: "Hanane F.", meta: "Il y a 3 mois" },
-  { stars: 5, text: "Très belle découverte ! L'endroit est cosy, propre et bien décoré. Les plats sont variés et savoureux. Parfait pour partager un moment spécial en famille ou entre amis.", initials: "CE", name: "Chaimae E.", meta: "Il y a un mois" },
-  { stars: 5, text: "Hera est définitivement l'une des meilleures adresses pour bruncher autour de Rabat. Je reviens à chaque fois et retrouve la même qualité — les menus sont copieux et d'un délice.", initials: "LP", name: "Leila P.", meta: "Local Guide", badge: "138 avis" },
-  { stars: 5, text: "Ce spot est devenu mon coup de cœur absolu. Niveau propreté, c'est nickel. Mais ce qui me fait revenir, c'est la bouffe — une tuerie ! Chaque ingrédient est travaillé avec soin.", initials: "AB", name: "Afaf B.", meta: "Il y a 6 mois" },
-  { stars: 5, text: "Un vrai coup de cœur ! Le pain perdu était tellement moelleux, et le matcha à la fraise — exquis. La déco est magnifique, chaleureuse et pensée dans les moindres détails.", initials: "ZI", name: "Zineb I.", meta: "Il y a 7 mois" },
+  {
+    stars: 5,
+    text: { fr: "L'une des meilleures expériences brunch que j'ai eues à Rabat. Produits frais, portions généreuses, service irréprochable. Un endroit que je recommande les yeux fermés.", ar: "إحدى أفضل تجارب البرانش التي عشتها في الرباط. منتجات طازجة، حصص سخية، وخدمة لا تشوبها شائبة. أنصح به بعيون مغمضة." },
+    initials: "MR", name: "Monsieur R.", meta: { fr: "Local Guide", ar: "مرشد محلي" }, badge: { fr: "103 avis", ar: "103 تقييم" },
+  },
+  {
+    stars: 5,
+    text: { fr: "Juste incroyablement bon ! Le brunch réalisé avec des produits frais est hyper réconfortant. Au-delà d'être excellent, tout est joliment présenté. Une adresse à retenir absolument.", ar: "لذيذ بشكل لا يُصدَّق! البرانش بمنتجات طازجة مريح جداً. وإلى جانب التميّز، كل شيء معروض بجمال. عنوان يستحق الحفظ." },
+    initials: "HF", name: "Hanane F.", meta: { fr: "Il y a 3 mois", ar: "قبل 3 أشهر" },
+  },
+  {
+    stars: 5,
+    text: { fr: "Très belle découverte ! L'endroit est cosy, propre et bien décoré. Les plats sont variés et savoureux. Parfait pour partager un moment spécial en famille ou entre amis.", ar: "اكتشاف جميل جداً! المكان دافئ ونظيف ومُزيَّن بذوق. الأطباق متنوعة ولذيذة. مثالي لمشاركة لحظة مميزة مع العائلة أو الأصدقاء." },
+    initials: "CE", name: "Chaimae E.", meta: { fr: "Il y a un mois", ar: "قبل شهر" },
+  },
+  {
+    stars: 5,
+    text: { fr: "Hera est définitivement l'une des meilleures adresses pour bruncher autour de Rabat. Je reviens à chaque fois et retrouve la même qualité — les menus sont copieux et délicieux.", ar: "هيرا بلا شك من أفضل عناوين البرانش حول الرباط. أعود في كل مرة وأجد نفس الجودة — القوائم سخية ولذيذة." },
+    initials: "LP", name: "Leila P.", meta: { fr: "Local Guide", ar: "مرشد محلي" }, badge: { fr: "138 avis", ar: "138 تقييم" },
+  },
+  {
+    stars: 5,
+    text: { fr: "Cet endroit est devenu mon coup de cœur absolu. Niveau propreté, c'est nickel. Mais ce qui me fait revenir, c'est la cuisine — une tuerie ! Chaque ingrédient est travaillé avec soin.", ar: "أصبح هذا المكان المفضل عندي على الإطلاق. النظافة ممتازة. لكن ما يعيدني هو الطعام — رائع! كل مكون يُحضَّر بعناية." },
+    initials: "AB", name: "Afaf B.", meta: { fr: "Il y a 6 mois", ar: "قبل 6 أشهر" },
+  },
+  {
+    stars: 5,
+    text: { fr: "Un vrai coup de cœur ! Le pain perdu était tellement moelleux, et le matcha à la fraise — exquis. La déco est magnifique, chaleureuse et pensée dans les moindres détails.", ar: "حُب من النظرة الأولى! الخبز المحمَّر كان طرياً جداً، والماتشا بالفراولة لذيذ. الديكور رائع، دافئ ومدروس بأدق التفاصيل." },
+    initials: "ZI", name: "Zineb I.", meta: { fr: "Il y a 7 mois", ar: "قبل 7 أشهر" },
+  },
 ];
 
 const SIGNATURE_DISHES = [
-  { img: dishBriocheSaumon, name: "Brioche Salée Saumon", tag: "Signature", className: "gi-large" },
-  { img: dishBagel, name: "Salty Bagel", tag: "Best-seller", className: "gi-medium" },
-  { img: drinkMatcha, name: "Iced Matcha Strawberry", tag: "Iconic", className: "gi-medium" },
-  { img: dishHalloumi, name: "Halloumi & Truffle Mushrooms", tag: "Premium", className: "gi-wide" },
-  { img: dishFullBrunch, name: "American Breakfast", tag: "Generous", className: "gi-wide" },
-  { img: dishGranolaBowl, name: "Granola Bowl", tag: "Healthy", className: "gi-wide" },
-  { img: dishProsciutto, name: "Toast Prosciutto & Avocat", tag: "Fresh", className: "gi-medium" },
-  { img: dishEggsBurger, name: "Turkish Eggs & Burger", tag: "Bold", className: "gi-medium" },
+  { img: dishBriocheSaumon, name: { fr: "Brioche Salée Saumon", ar: "بريوش مالحة بالسلمون" }, tag: { fr: "Signature", ar: "مميز" }, className: "gi-large" },
+  { img: dishBagel, name: { fr: "Bagel Salé", ar: "بايغل مالح" }, tag: { fr: "Best-seller", ar: "الأكثر مبيعاً" }, className: "gi-medium" },
+  { img: drinkMatcha, name: { fr: "Matcha Glacé Fraise", ar: "ماتشا مثلج بالفراولة" }, tag: { fr: "Iconique", ar: "أيقوني" }, className: "gi-medium" },
+  { img: dishHalloumiDuo, name: { fr: "Halloumi & Champignons Truffe", ar: "حلومي وفطر الكمأ" }, tag: { fr: "Premium", ar: "بريميوم" }, className: "gi-wide" },
+  { img: dishHeraBurger, name: { fr: "Hera Burger", ar: "برغر هيرا" }, tag: { fr: "Signature", ar: "مميز" }, className: "gi-wide" },
+  { img: dishTacosLunch, name: { fr: "Trio de Tacos", ar: "ثلاثية التاكوس" }, tag: { fr: "Lunch Time", ar: "وقت الغداء" }, className: "gi-wide" },
+  { img: dishShakshuka, name: { fr: "Shakshuka", ar: "شكشوكة" }, tag: { fr: "Coup de cœur", ar: "محبوب" }, className: "gi-medium" },
+  { img: dishGuacNachos, name: { fr: "Guacamole y Nachos", ar: "غواكامولي ونتشوس" }, tag: { fr: "Frais", ar: "طازج" }, className: "gi-medium" },
 ];
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeCat, setActiveCat] = useState("combos");
+  const [lang, setLang] = useState<Lang>("fr");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = lang === "ar" ? "ar" : "fr";
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  }, [lang]);
 
   useEffect(() => {
     const reveals = document.querySelectorAll(".reveal");
@@ -354,9 +401,14 @@ const Index = () => {
     );
     reveals.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [activeCat]);
+  }, [activeCat, lang]);
 
   const current = CATEGORIES.find((c) => c.id === activeCat)!;
+  const toggleLang = () => setLang((l) => (l === "fr" ? "ar" : "fr"));
+
+  const itemName = (n: string) => (lang === "ar" && ITEM_AR[n] ? ITEM_AR[n] : n);
+  const tagText = (tag: string) => (lang === "ar" && TAG_AR[tag] ? TAG_AR[tag] : tag);
+  const desc = (d?: { fr: string; ar?: string }) => (d ? (lang === "ar" ? d.ar || d.fr : d.fr) : "");
 
   return (
     <>
@@ -365,11 +417,17 @@ const Index = () => {
           <img src={logo} alt="Hera Brunch" className="nav-logo-img" />
         </a>
         <ul className="nav-links">
-          <li><a href="#about">Notre histoire</a></li>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#reviews">Avis</a></li>
-          <li><a href="#info">Infos</a></li>
-          <li><a href="#contact" className="nav-cta">Réserver</a></li>
+          <li><a href="#about">{t("nav_story", lang)}</a></li>
+          <li><a href="#menu">{t("nav_menu", lang)}</a></li>
+          <li><a href="#reviews">{t("nav_reviews", lang)}</a></li>
+          <li><a href="#info">{t("nav_info", lang)}</a></li>
+          <li><a href="#contact" className="nav-cta">{t("nav_reserve", lang)}</a></li>
+          <li>
+            <button onClick={toggleLang} className="lang-toggle" aria-label="Switch language">
+              <span className="lang-globe">🌐</span>
+              {lang === "fr" ? "العربية" : "Français"}
+            </button>
+          </li>
         </ul>
       </nav>
 
@@ -380,9 +438,9 @@ const Index = () => {
           <img src={dishBriocheSaumon} alt="" />
           <img src={dishBagel} alt="" />
           <img src={drinkMatcha} alt="" />
-          <img src={dishFullBrunch} alt="" />
-          <img src={dishHalloumi} alt="" />
-          <img src={dishGranolaBowl} alt="" />
+          <img src={dishHeraBurger} alt="" />
+          <img src={dishHalloumiDuo} alt="" />
+          <img src={dishTacosLunch} alt="" />
         </div>
         <div className="hero-line-left" />
         <div className="hero-line-right" />
@@ -393,7 +451,7 @@ const Index = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="hero-eyebrow"
           >
-            Oulad Mtaa · Rabat · Maroc
+            {t("hero_eyebrow", lang)}
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -401,7 +459,7 @@ const Index = () => {
             transition={{ duration: 1, delay: 0.4 }}
             className="hero-title"
           >
-            HERA<br /><em>Brunch</em>
+            HERA<br /><em>{lang === "ar" ? "برانش" : "Brunch"}</em>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -409,7 +467,7 @@ const Index = () => {
             transition={{ duration: 0.9, delay: 0.7 }}
             className="hero-subtitle-word"
           >
-            Where cultures meet for brunch
+            {t("hero_subtitle", lang)}
           </motion.p>
           <motion.div
             initial={{ scaleX: 0 }}
@@ -423,7 +481,7 @@ const Index = () => {
             transition={{ duration: 0.9, delay: 1.1 }}
             className="hero-desc"
           >
-            Une expérience culinaire d'exception dans un écrin cosy et raffiné. Produits frais, saveurs authentiques, moments inoubliables.
+            {t("hero_desc", lang)}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -431,12 +489,12 @@ const Index = () => {
             transition={{ duration: 0.9, delay: 1.3 }}
             style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}
           >
-            <a href="#menu" className="btn-primary">Découvrir le menu</a>
-            <a href="#contact" className="btn-ghost">Nous contacter</a>
+            <a href="#menu" className="btn-primary">{t("cta_discover", lang)}</a>
+            <a href="#contact" className="btn-ghost">{t("cta_contact", lang)}</a>
           </motion.div>
         </div>
         <div className="hero-scroll">
-          <span>Scroll</span>
+          <span>{t("scroll", lang)}</span>
           <div className="scroll-line" />
         </div>
       </section>
@@ -445,38 +503,37 @@ const Index = () => {
         <div className="marquee-track">
           {Array.from({ length: 2 }).map((_, i) => (
             <span key={i} style={{ display: "contents" }}>
-              <span className="marquee-item">Brunch & Déjeuner</span>
-              <span className="marquee-item">Produits frais</span>
-              <span className="marquee-item">Ambiance cosy</span>
-              <span className="marquee-item">Ouvert 7j/7</span>
-              <span className="marquee-item">4.7 ★ Google</span>
-              <span className="marquee-item">Le meilleur brunch de Rabat</span>
+              <span className="marquee-item">{t("m1", lang)}</span>
+              <span className="marquee-item">{t("m2", lang)}</span>
+              <span className="marquee-item">{t("m3", lang)}</span>
+              <span className="marquee-item">{t("m4", lang)}</span>
+              <span className="marquee-item">{t("m5", lang)}</span>
+              <span className="marquee-item">{t("m6", lang)}</span>
             </span>
           ))}
         </div>
       </div>
 
-      {/* SIGNATURE GALLERY */}
       <section className="signature-gallery" id="gallery">
-        <span className="section-label reveal">Nos plats signature</span>
+        <span className="section-label reveal">{t("signature_label", lang)}</span>
         <h2 className="section-title reveal reveal-delay-1">
-          Chaque assiette,<br /><em>une histoire à savourer</em>
+          {t("signature_title_a", lang)}<br /><em>{t("signature_title_b", lang)}</em>
         </h2>
         <div className="gold-rule center reveal reveal-delay-2" />
         <div className="gallery-grid">
           {SIGNATURE_DISHES.map((dish, i) => (
             <motion.div
-              key={dish.name}
+              key={dish.name.fr}
               className={`gallery-item ${dish.className}`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: (i % 4) * 0.1 }}
             >
-              <img src={dish.img} alt={dish.name} loading="lazy" />
+              <img src={dish.img} alt={dish.name[lang]} loading="lazy" />
               <div className="gallery-overlay">
-                <span className="gallery-overlay-tag">{dish.tag}</span>
-                <span className="gallery-overlay-name">{dish.name}</span>
+                <span className="gallery-overlay-tag">{dish.tag[lang]}</span>
+                <span className="gallery-overlay-name">{dish.name[lang]}</span>
               </div>
             </motion.div>
           ))}
@@ -486,8 +543,8 @@ const Index = () => {
       <section className="about" id="about">
         <div className="about-visual reveal">
           <div className="about-img-stack">
-            <div><img src={dishBriocheSaumon} alt="Brioche salée saumon" /></div>
-            <div><img src={dishProsciutto} alt="Toast prosciutto avocat" /></div>
+            <div><img src={dishBriocheSaumon} alt="" /></div>
+            <div><img src={dishShakshuka2} alt="" /></div>
           </div>
           <motion.div
             className="about-img-accent float-anim"
@@ -498,24 +555,20 @@ const Index = () => {
           >
             <div className="about-rating-num">4.7</div>
             <div className="about-rating-stars">★★★★★</div>
-            <div className="about-rating-label">693 avis Google</div>
+            <div className="about-rating-label">{t("rating_label", lang)}</div>
           </motion.div>
         </div>
         <div className="about-text">
-          <span className="section-label reveal">Notre histoire</span>
-          <h2 className="section-title reveal reveal-delay-1">Un coup de cœur<br /><em>né à Rabat</em></h2>
+          <span className="section-label reveal">{t("about_label", lang)}</span>
+          <h2 className="section-title reveal reveal-delay-1">{t("about_title_a", lang)}<br /><em>{t("about_title_b", lang)}</em></h2>
           <div className="gold-rule reveal reveal-delay-2" />
-          <p className="reveal reveal-delay-2">
-            Hera Brunch est né d'une passion simple : offrir à Rabat un espace où chaque bouchée raconte une histoire. Dans notre salle chaleureuse et soigneusement décorée d'Oulad Mtaa, nous travaillons chaque jour avec des produits frais et des recettes pensées avec amour.
-          </p>
-          <p className="reveal reveal-delay-2">
-            Du pain perdu moelleux au matcha fraise, en passant par nos formules de brunch généreux — ici, manger est un rituel. Saveurs authentiques, recettes élaborées avec soin, chaque visite est une nouvelle découverte.
-          </p>
+          <p className="reveal reveal-delay-2">{t("about_p1", lang)}</p>
+          <p className="reveal reveal-delay-2">{t("about_p2", lang)}</p>
           <div className="about-highlights reveal reveal-delay-3">
-            <div className="highlight-item"><div className="highlight-num">693+</div><div className="highlight-label">Avis Google</div></div>
-            <div className="highlight-item"><div className="highlight-num">4.7</div><div className="highlight-label">Note moyenne</div></div>
-            <div className="highlight-item"><div className="highlight-num">100%</div><div className="highlight-label">Produits frais</div></div>
-            <div className="highlight-item"><div className="highlight-num">N°1</div><div className="highlight-label">Brunch à Rabat</div></div>
+            <div className="highlight-item"><div className="highlight-num">693+</div><div className="highlight-label">{t("hl_reviews", lang)}</div></div>
+            <div className="highlight-item"><div className="highlight-num">4.7</div><div className="highlight-label">{t("hl_rating", lang)}</div></div>
+            <div className="highlight-item"><div className="highlight-num">100%</div><div className="highlight-label">{t("hl_fresh", lang)}</div></div>
+            <div className="highlight-item"><div className="highlight-num">N°1</div><div className="highlight-label">{t("hl_n1", lang)}</div></div>
           </div>
         </div>
       </section>
@@ -523,12 +576,12 @@ const Index = () => {
       <div className="experience-strip">
         <div className="strip-inner">
           {[
-            { i: "☀️", t: "Brunch du matin", d: "Formules généreuses servies avec amour, du matin jusqu'à l'après-midi" },
-            { i: "🍽️", t: "Déjeuner & Lunch", d: "Une carte déjeuner savoureuse pour prolonger le plaisir jusqu'en après-midi" },
-            { i: "🌿", t: "Produits frais", d: "Sélection rigoureuse d'ingrédients de qualité, préparés chaque jour" },
-            { i: "✨", t: "Cadre raffiné", d: "Décoration pensée dans les moindres détails, ambiance cosy et lumineuse" },
+            { i: "☀️", t: t("strip1_t", lang), d: t("strip1_d", lang) },
+            { i: "🍽️", t: t("strip2_t", lang), d: t("strip2_d", lang) },
+            { i: "🌿", t: t("strip3_t", lang), d: t("strip3_d", lang) },
+            { i: "✨", t: t("strip4_t", lang), d: t("strip4_d", lang) },
           ].map((s, idx) => (
-            <div key={s.t} className={`strip-item reveal ${idx ? `reveal-delay-${idx}` : ""}`}>
+            <div key={idx} className={`strip-item reveal ${idx ? `reveal-delay-${idx}` : ""}`}>
               <div className="strip-icon">{s.i}</div>
               <div className="strip-title">{s.t}</div>
               <p className="strip-desc">{s.d}</p>
@@ -540,8 +593,8 @@ const Index = () => {
       <section className="menu-section" id="menu">
         <div className="menu-inner">
           <div className="menu-header">
-            <span className="section-label reveal">À la carte</span>
-            <h2 className="section-title reveal reveal-delay-1">Notre <em>menu complet</em></h2>
+            <span className="section-label reveal">{t("menu_label", lang)}</span>
+            <h2 className="section-title reveal reveal-delay-1">{t("menu_title_a", lang)} <em>{t("menu_title_b", lang)}</em></h2>
             <div className="gold-rule center reveal reveal-delay-2" />
           </div>
 
@@ -552,14 +605,14 @@ const Index = () => {
                 className={`menu-tab ${activeCat === c.id ? "active" : ""}`}
                 onClick={() => setActiveCat(c.id)}
               >
-                {c.label}
+                {CAT_LABELS[c.id][lang]}
               </button>
             ))}
           </div>
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeCat}
+              key={activeCat + lang}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -573,12 +626,15 @@ const Index = () => {
                     className={`menu-real-item ${item.featured ? "featured" : ""}`}
                     style={{ animationDelay: `${i * 0.05}s` }}
                   >
-                    <div className="menu-real-left">
-                      <div className="menu-real-name">
-                        {item.name}
-                        {item.tag && <span className="menu-tag">{item.tag}</span>}
+                    <div className="menu-real-left-wrap">
+                      {item.image && <img src={item.image} alt="" className="menu-thumb" loading="lazy" />}
+                      <div className="menu-real-left">
+                        <div className="menu-real-name">
+                          {itemName(item.name)}
+                          {item.tag && <span className="menu-tag">{tagText(item.tag)}</span>}
+                        </div>
+                        {item.desc && <div className="menu-real-desc">{desc(item.desc)}</div>}
                       </div>
-                      {item.desc && <div className="menu-real-desc">{item.desc}</div>}
                     </div>
                     <div className="menu-real-price">{item.price}</div>
                   </div>
@@ -589,9 +645,9 @@ const Index = () => {
 
           <div style={{ textAlign: "center", marginTop: "3.5rem" }} className="reveal">
             <p style={{ fontSize: "0.75rem", letterSpacing: "0.2em", color: "hsl(19 58% 51% / 0.5)", textTransform: "uppercase", marginBottom: "1.5rem" }}>
-              Suppléments : halloumi 20 · pepperoni 15 · potatoes 15 · bacon 18 · saumon 25 · œuf 9 · cream cheese 9 · champignons 20 DH
+              {t("supplements", lang)}
             </p>
-            <a href="#contact" className="btn-primary">Réserver une table</a>
+            <a href="#contact" className="btn-primary">{t("menu_reserve", lang)}</a>
           </div>
         </div>
       </section>
@@ -599,35 +655,35 @@ const Index = () => {
       <section className="info-section" id="info">
         <div className="info-inner">
           <div className="info-block">
-            <span className="section-label reveal">Horaires</span>
-            <h3 className="reveal reveal-delay-1">Nous<br />sommes ouverts</h3>
+            <span className="section-label reveal">{t("hours_label", lang)}</span>
+            <h3 className="reveal reveal-delay-1">{t("hours_title_a", lang)}<br />{t("hours_title_b", lang)}</h3>
             <ul className="info-list reveal reveal-delay-2">
-              <li><span className="day">Lundi</span><span className="time">Fermé</span></li>
-              <li><span className="day">Mardi – Vendredi</span><span className="time">09h – 19h</span></li>
-              <li><span className="day">Samedi</span><span className="time">09h – 19h</span></li>
-              <li><span className="day">Dimanche</span><span className="time">09h – 19h</span></li>
+              <li><span className="day">{t("monday", lang)}</span><span className="time">{t("closed", lang)}</span></li>
+              <li><span className="day">{t("tue_fri", lang)}</span><span className="time">09h – 19h</span></li>
+              <li><span className="day">{t("saturday", lang)}</span><span className="time">09h – 19h</span></li>
+              <li><span className="day">{t("sunday", lang)}</span><span className="time">09h – 19h</span></li>
             </ul>
           </div>
           <div className="info-block">
-            <span className="section-label reveal">Adresse</span>
-            <h3 className="reveal reveal-delay-1">Oulad Mtaa<br />Rabat</h3>
+            <span className="section-label reveal">{t("address_label", lang)}</span>
+            <h3 className="reveal reveal-delay-1">{t("address_title_a", lang)}<br />{t("address_title_b", lang)}</h3>
             <div className="contact-items reveal reveal-delay-2">
               <div>
-                <div className="contact-item-label">Localisation</div>
-                <div className="contact-item-val">Oulad Mtaa, Rabat<br />Maroc</div>
+                <div className="contact-item-label">{t("loc_label", lang)}</div>
+                <div className="contact-item-val" style={{ whiteSpace: "pre-line" }}>{t("loc_val", lang)}</div>
               </div>
               <div>
-                <div className="contact-item-label">Livraison</div>
-                <div className="contact-item-val">Disponible sur<br />Done & Glovo</div>
+                <div className="contact-item-label">{t("delivery_label", lang)}</div>
+                <div className="contact-item-val" style={{ whiteSpace: "pre-line" }}>{t("delivery_val", lang)}</div>
               </div>
             </div>
           </div>
           <div className="info-block">
-            <span className="section-label reveal">Contact</span>
-            <h3 className="reveal reveal-delay-1">Nous<br />contacter</h3>
+            <span className="section-label reveal">{t("contact_label", lang)}</span>
+            <h3 className="reveal reveal-delay-1">{t("contact_title_a", lang)}<br />{t("contact_title_b", lang)}</h3>
             <div className="contact-items reveal reveal-delay-2">
               <div>
-                <div className="contact-item-label">Téléphone</div>
+                <div className="contact-item-label">{t("phone_label", lang)}</div>
                 <div className="contact-item-val">
                   <a href="tel:0667474027" style={{ color: "hsl(var(--gold))", textDecoration: "none", letterSpacing: "0.05em" }}>
                     06 67 47 40 27
@@ -635,7 +691,7 @@ const Index = () => {
                 </div>
               </div>
               <div>
-                <div className="contact-item-label">Instagram</div>
+                <div className="contact-item-label">{t("insta_label", lang)}</div>
                 <div className="contact-item-val">@herabrunch</div>
               </div>
             </div>
@@ -645,14 +701,12 @@ const Index = () => {
 
       <section className="reservation-section" id="contact">
         <div className="reservation-inner">
-          <span className="section-label reveal" style={{ textAlign: "center", display: "block" }}>Contact</span>
+          <span className="section-label reveal" style={{ textAlign: "center", display: "block" }}>{t("contact_label", lang)}</span>
           <h2 className="section-title reveal reveal-delay-1" style={{ textAlign: "center" }}>
-            Contactez<br /><em>notre équipe</em>
+            {t("contact_title_main_a", lang)}<br /><em>{t("contact_title_main_b", lang)}</em>
           </h2>
           <div className="gold-rule center reveal reveal-delay-2" />
-          <p className="reveal reveal-delay-2">
-            Une question, une demande spéciale ou envie de nous rejoindre pour un moment inoubliable ? N'hésitez pas à nous appeler directement — notre équipe se fera un plaisir de vous répondre.
-          </p>
+          <p className="reveal reveal-delay-2">{t("contact_intro", lang)}</p>
           <motion.div
             className="reveal reveal-delay-2"
             style={{ margin: "2.5rem 0 3rem" }}
@@ -660,21 +714,21 @@ const Index = () => {
             transition={{ duration: 0.3 }}
           >
             <div style={{ border: "1px solid hsl(var(--gold-light))", padding: "2.5rem", background: "hsl(var(--warm-white))", textAlign: "center" }}>
-              <div style={{ fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "hsl(var(--gold))", marginBottom: "1rem" }}>Téléphone</div>
+              <div style={{ fontSize: "0.65rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "hsl(var(--gold))", marginBottom: "1rem" }}>{t("phone_label", lang)}</div>
               <a href="tel:0667474027" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.8rem,5vw,2.8rem)", fontWeight: 300, color: "hsl(var(--espresso))", textDecoration: "none", letterSpacing: "0.1em", display: "block", marginBottom: "0.5rem" }}>
                 06 67 47 40 27
               </a>
-              <div style={{ fontSize: "0.75rem", color: "hsl(var(--text-muted))", fontWeight: 300, letterSpacing: "0.1em" }}>Lun – Dim · 09h – 17h</div>
+              <div style={{ fontSize: "0.75rem", color: "hsl(var(--text-muted))", fontWeight: 300, letterSpacing: "0.1em" }}>{t("hours_short", lang)}</div>
             </div>
           </motion.div>
           <div className="reveal reveal-delay-2" style={{ display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="tel:0667474027" className="btn-primary">📞 Appeler maintenant</a>
+            <a href="tel:0667474027" className="btn-primary">{t("call_now", lang)}</a>
             <a href="https://www.instagram.com/herabrunch" target="_blank" rel="noreferrer" className="btn-ghost" style={{ color: "hsl(var(--espresso))", borderColor: "hsl(var(--gold))" }}>
-              Instagram @herabrunch
+              {t("insta_btn", lang)}
             </a>
           </div>
           <p className="reveal" style={{ fontSize: "0.72rem", color: "hsl(var(--text-muted))", marginTop: "2rem", letterSpacing: "0.05em" }}>
-            Nous répondons également sur Instagram pour toute demande d'information.
+            {t("contact_outro", lang)}
           </p>
         </div>
       </section>
@@ -682,14 +736,14 @@ const Index = () => {
       <section className="reviews-section" id="reviews">
         <div className="reviews-header">
           <div>
-            <span className="section-label reveal">Témoignages</span>
-            <h2 className="section-title reveal reveal-delay-1">Ce que disent<br /><em>nos clients</em></h2>
+            <span className="section-label reveal">{t("reviews_label", lang)}</span>
+            <h2 className="section-title reveal reveal-delay-1">{t("reviews_title_a", lang)}<br /><em>{t("reviews_title_b", lang)}</em></h2>
             <div className="gold-rule reveal reveal-delay-2" />
           </div>
           <div style={{ textAlign: "right" }} className="reveal">
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.5rem", fontWeight: 300, color: "hsl(var(--gold-dark))", lineHeight: 1 }}>4.7</div>
             <div style={{ color: "hsl(var(--gold))", fontSize: "1rem", letterSpacing: "0.1rem" }}>★★★★★</div>
-            <div style={{ fontSize: "0.7rem", letterSpacing: "0.15em", color: "hsl(var(--text-muted))", textTransform: "uppercase", marginTop: "0.3rem" }}>693 avis · Google Maps</div>
+            <div style={{ fontSize: "0.7rem", letterSpacing: "0.15em", color: "hsl(var(--text-muted))", textTransform: "uppercase", marginTop: "0.3rem" }}>{t("reviews_count", lang)}</div>
           </div>
         </div>
         <div className="reviews-grid">
@@ -704,14 +758,14 @@ const Index = () => {
               whileHover={{ y: -6 }}
             >
               <div className="review-stars">{"★".repeat(r.stars)}</div>
-              <p className="review-text">{r.text}</p>
+              <p className="review-text">{r.text[lang]}</p>
               <div className="review-author">
                 <div className="review-avatar">{r.initials}</div>
                 <div>
                   <div className="review-name">{r.name}</div>
                   <div className="review-meta">
-                    {r.meta}
-                    {r.badge && <> · <span className="review-badge">{r.badge}</span></>}
+                    {r.meta[lang]}
+                    {r.badge && <> · <span className="review-badge">{r.badge[lang]}</span></>}
                   </div>
                 </div>
               </div>
@@ -727,22 +781,22 @@ const Index = () => {
               <a href="#top" className="footer-logo" aria-label="Hera Brunch">
                 <img src={logo} alt="Hera Brunch" className="footer-logo-img" />
               </a>
-              <p className="footer-tagline" style={{ marginTop: "0.5rem" }}>Oulad Mtaa · Rabat · Maroc</p>
+              <p className="footer-tagline" style={{ marginTop: "0.5rem" }}>{t("footer_tagline", lang)}</p>
             </div>
             <ul className="footer-links">
-              <li><a href="#about">Histoire</a></li>
-              <li><a href="#menu">Menu</a></li>
-              <li><a href="#reviews">Avis</a></li>
-              <li><a href="#info">Horaires</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#about">{t("footer_history", lang)}</a></li>
+              <li><a href="#menu">{t("nav_menu", lang)}</a></li>
+              <li><a href="#reviews">{t("nav_reviews", lang)}</a></li>
+              <li><a href="#info">{t("footer_hours", lang)}</a></li>
+              <li><a href="#contact">{t("contact_label", lang)}</a></li>
             </ul>
           </div>
           <div className="footer-bottom">
-            <p className="footer-copy">© 2026 Hera Brunch · Tous droits réservés</p>
+            <p className="footer-copy">{t("footer_copy", lang)}</p>
             <div className="google-rating">
               <span>★★★★★</span>
               <strong>4.7</strong>
-              <span>· 693 avis Google</span>
+              <span>· {t("footer_reviews", lang)}</span>
             </div>
           </div>
         </div>
