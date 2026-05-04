@@ -690,7 +690,16 @@ const Index = () => {
             <div className="contact-items reveal reveal-delay-2">
               <div>
                 <div className="contact-item-label">{t("loc_label", lang)}</div>
-                <div className="contact-item-val" style={{ whiteSpace: "pre-line" }}>{t("loc_val", lang)}</div>
+                <a
+                  href="https://www.google.com/maps/place/Hera+Brunch/@33.9378009,-6.8965967,17z/data=!3m1!4b1!4m6!3m5!1s0xda71326a5cfea17:0x4c955f62fde339cb!8m2!3d33.9378009!4d-6.8965967!16s%2Fg%2F11yf8j2f80"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="contact-item-val map-link"
+                  style={{ whiteSpace: "pre-line", display: "inline-block", textDecoration: "none" }}
+                >
+                  {t("loc_val", lang)}
+                  <span className="map-link-cta"> · {lang === "ar" ? "افتح في الخرائط ↗" : "Ouvrir dans Maps ↗"}</span>
+                </a>
               </div>
               <div>
                 <div className="contact-item-label">{t("delivery_label", lang)}</div>
