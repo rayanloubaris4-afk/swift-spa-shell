@@ -760,3 +760,8 @@ html[dir="rtl"] .menu-real-item img.menu-thumb { margin-right: 0; margin-left: 1
   .delivery-inner { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
   .delivery-buttons { align-items: stretch; }
 }
+
+/* Map link */
+.map-link { color: hsl(38 60% 97% / 0.7); transition: color 0.3s; cursor: pointer; }
+.map-link:hover { color: hsl(var(--gold)); }
+.map-link-cta { display: block; margin-top: 0.4rem; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: hsl(var(--gold)); font-weight: 400; }
