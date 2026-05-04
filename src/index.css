@@ -569,3 +569,142 @@ html[dir="rtl"] .menu-real-desc { font-style: normal; }
   .strip-inner { grid-template-columns: 1fr; }
   .about-highlights { grid-template-columns: 1fr; }
 }
+
+/* ============================================ */
+/* ===== EYE-CATCHING ENHANCED ANIMATIONS ===== */
+/* ============================================ */
+
+@keyframes heroDrift {
+  0%, 100% { transform: translate3d(0,0,0) scale(1.05); }
+  50% { transform: translate3d(0,-12px,0) scale(1.08); }
+}
+.hero-photos { animation: heroDrift 18s ease-in-out infinite; }
+.hero-photos img { transition: filter 1.5s; }
+.hero:hover .hero-photos img { filter: grayscale(0) contrast(1.1) brightness(1.05); }
+
+@keyframes goldShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.hero-title em {
+  background: linear-gradient(90deg,
+    hsl(var(--gold-light)) 0%,
+    hsl(var(--gold)) 25%,
+    hsl(38 90% 80%) 50%,
+    hsl(var(--gold)) 75%,
+    hsl(var(--gold-light)) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 4s linear infinite;
+}
+
+.section-label { position: relative; padding-bottom: 0.4rem; }
+.section-label::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 28px; height: 1px; background: hsl(var(--gold));
+  animation: labelGrow 2.4s ease-in-out infinite;
+}
+@keyframes labelGrow {
+  0%, 100% { width: 28px; opacity: 0.6; }
+  50% { width: 56px; opacity: 1; }
+}
+
+.gallery-item {
+  box-shadow: 0 8px 30px hsl(24 24% 9% / 0.18);
+  transition: box-shadow 0.6s, transform 0.6s cubic-bezier(0.2,0.8,0.2,1);
+}
+.gallery-item::after {
+  content: ''; position: absolute; inset: 0;
+  border: 0px solid hsl(var(--gold));
+  pointer-events: none; transition: border-width 0.4s;
+}
+.gallery-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px hsl(var(--gold) / 0.35);
+}
+.gallery-item:hover::after { border-width: 3px; }
+
+.menu-tab.active {
+  box-shadow: 0 0 24px hsl(var(--gold) / 0.5), inset 0 0 0 1px hsl(var(--gold));
+  animation: tabPulse 2.2s ease-in-out infinite;
+}
+@keyframes tabPulse {
+  0%, 100% { box-shadow: 0 0 24px hsl(var(--gold) / 0.4), inset 0 0 0 1px hsl(var(--gold)); }
+  50% { box-shadow: 0 0 36px hsl(var(--gold) / 0.7), inset 0 0 0 1px hsl(var(--gold)); }
+}
+
+@keyframes menuItemInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes menuItemInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.menu-real-item { animation: menuItemInLeft 0.6s cubic-bezier(0.2,0.8,0.2,1) both; }
+.menu-real-item:nth-child(2n) { animation-name: menuItemInRight; }
+
+.menu-tag {
+  animation: tagPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+  transition: transform 0.3s;
+}
+.menu-real-item:hover .menu-tag { transform: scale(1.1) rotate(-3deg); }
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.about-img-accent { position: relative; overflow: hidden; }
+.about-img-accent::before {
+  content: ''; position: absolute; inset: -50%;
+  background: conic-gradient(from 0deg, transparent 0%, hsl(38 60% 97% / 0.25) 25%, transparent 50%);
+  animation: ringRotate 6s linear infinite;
+}
+@keyframes ringRotate { to { transform: rotate(360deg); } }
+
+.marquee-section {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.strip-item { position: relative; overflow: hidden; }
+.strip-item::after {
+  content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 2px;
+  background: hsl(var(--gold)); transition: all 0.5s; transform: translateX(-50%);
+}
+.strip-item:hover::after { width: 100%; }
+
+.review-card { animation: cardFloat 6s ease-in-out infinite; }
+.review-card:nth-child(2) { animation-delay: -2s; }
+.review-card:nth-child(3) { animation-delay: -4s; }
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.review-card:hover { animation-play-state: paused; }
+
+.btn-primary { animation: ctaPulse 2.6s ease-in-out infinite; }
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--gold) / 0.55); }
+  50% { box-shadow: 0 0 0 14px hsl(var(--gold) / 0); }
+}
+
+.reveal { opacity: 0; transform: translateY(40px); filter: blur(6px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2,0.8,0.2,1), filter 0.9s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+.hero-scroll span { animation: scrollLabelPulse 2.5s ease-in-out infinite; }
+@keyframes scrollLabelPulse {
+  0%, 100% { opacity: 0.6; letter-spacing: 0.3em; }
+  50% { opacity: 1; letter-spacing: 0.5em; }
+}
+
+.menu-real-item img.menu-thumb {
+  width: 72px; height: 72px; object-fit: cover; border-radius: 4px;
+  margin-right: 1rem; transition: transform 0.6s;
+  flex-shrink: 0;
+}
+html[dir="rtl"] .menu-real-item img.menu-thumb { margin-right: 0; margin-left: 1rem; }
+.menu-real-item:hover img.menu-thumb { transform: scale(1.08) rotate(-2deg); }
+.menu-real-left-wrap { display: flex; gap: 0.5rem; flex: 1; align-items: flex-start; }
